@@ -1,0 +1,56 @@
+1. first we need to take atleast more then 2 server at a time 
+2. Use multi-exicution option then {create user} 
+  ->sudo useradd ansible 
+  ->sudo passwd ansible (give the passwd of user )
+3. sudo visudo          (given all permission to the user)
+ ->ansible ALL=(ALL) NOPASSWD:ALL
+->ctrl+x+Y ,enter 
+4. vim /etc/ssh/sshd_config     (give to the passwd authenticator make it as "yes")
+->#passwd .....
+->permitEnptypasswd -yes
+:wq
+5. sudo systemctl restart ssh   
+6. sudo systemctl status  ssh
+->Active (running)
+7. sudo su ansible 
+8. exit
+9. sudo yum install python3 -y    (we r installing the python package because of ansible maintaining redhat company and writting in python programming language )
+10. python3 --version (for verification )
+11. ssh-keygen 
+12. ssh-copy-id ansible@ip add 
+ ->yes
+ ->passwd of user
+13. exit 
+14. mkdir /etc/ansible (for crating directory )
+15 . sudo vim /etc/ansible/hosts
+->[dev]
+ 1st ip address                     (we can use number of ip address based on requirement ) 
+ 2nd ip address 
+:wq
+16. ansible dev -m ping     (check the network connection between server's )(m - for modules) (dev for groupname inside we had given vi editer)
+  ->we will get successfully connect to the server's 
+
+
+
+
+
+
+Adhoc command's 
+---------******-----------
+
+   1. ansible dev -m ping -o (all server information )
+   2. ansible ipadd -m ping (get the only one server information)
+   3. ansible dev[0] -m ping ([0] mean's index value ,get the information of first server )
+   4. ansible dev -m shell -a date /uptime   (get the timestamp and how long server is activated )(a for argument's)
+  -------------------------*************************--------------------------------
+install ---------present 
+unistall ------absent 
+update -------latest 
+start------stared 
+
+
+1. how to install packages by using ansible 
+
+----*****  ---- 
+A)ansible dev -m yum -a "name=http, state=present " --become             (become's for give the root priviliges )
+
